@@ -1,4 +1,4 @@
-import { SERVICES, REVIEWS, FEATURED } from '../data.js'
+import { SERVICES, REVIEWS, FEATURED, RESULTS } from '../data.js'
 import { localizeService } from '../helpers.js'
 
 // Three home-page benefit points, copy varies per language (from the handoff).
@@ -202,17 +202,23 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
           <div className="eyebrow">{t.results_eyebrow}</div>
           <h2>{t.results_title}</h2>
         </div>
-        <div className="ba-grid">
-          <figure className="ba">
-            <img src="uploads/result-before.jpg" alt={t.results_before} loading="lazy" />
-            <figcaption>{t.results_before}</figcaption>
-          </figure>
-          <figure className="ba">
-            <img src="uploads/result-after.jpg" alt={t.results_after} loading="lazy" />
-            <figcaption>{t.results_after}</figcaption>
-          </figure>
+        <div className="results-cases">
+          {RESULTS.map((c, i) => (
+            <div className="result-case" key={i}>
+              <div className="ba-grid">
+                <figure className="ba">
+                  <img src={c.before} alt={t.results_before} loading="lazy" />
+                  <figcaption>{t.results_before}</figcaption>
+                </figure>
+                <figure className="ba">
+                  <img src={c.after} alt={t.results_after} loading="lazy" />
+                  <figcaption>{t.results_after}</figcaption>
+                </figure>
+              </div>
+              <p className="results-caption">{t[c.captionKey]}</p>
+            </div>
+          ))}
         </div>
-        <p className="results-caption">{t.results_caption}</p>
       </section>
 
       {/* FAQ */}

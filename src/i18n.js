@@ -35,7 +35,9 @@ export const TR = {
     gallery_cat_depil: 'Депиляция и шугаринг', gallery_cat_electro: 'Электроэпиляция', gallery_cat_massage: 'Массаж',
     reviews_eyebrow: 'Отзывы', reviews_title: 'Что говорят клиенты',
     results_eyebrow: 'Результат', results_title: 'До и после',
-    results_before: 'До', results_after: 'После', results_caption: 'Электроэпиляция, зона подмышек.',
+    results_before: 'До', results_after: 'После',
+    results_cap_underarm: 'Электроэпиляция, зона подмышек.',
+    results_cap_bikini: 'Электроэпиляция, бикини. Промежуточный результат: 7 месяцев, 6 полных проводок.',
     process_eyebrow: 'Как проходит', process_title: 'Электроэпиляция шаг за шагом',
     process: [
       { t: 'Консультация', d: 'Обсуждаем зону, тип волос и составляем план сеансов.' },
@@ -117,7 +119,9 @@ export const TR = {
     gallery_cat_depil: 'Depilatsioon ja suhkur', gallery_cat_electro: 'Elektroepilatsioon', gallery_cat_massage: 'Massaaž',
     reviews_eyebrow: 'Arvustused', reviews_title: 'Mida kliendid ütlevad',
     results_eyebrow: 'Tulemus', results_title: 'Enne ja pärast',
-    results_before: 'Enne', results_after: 'Pärast', results_caption: 'Elektroepilatsioon, kaenlaalused.',
+    results_before: 'Enne', results_after: 'Pärast',
+    results_cap_underarm: 'Elektroepilatsioon, kaenlaalused.',
+    results_cap_bikini: 'Elektroepilatsioon, bikiinijoon. Vahetulemus: 7 kuud, 6 täisseanssi.',
     process_eyebrow: 'Kuidas käib', process_title: 'Elektroepilatsioon samm-sammult',
     process: [
       { t: 'Konsultatsioon', d: 'Arutame piirkonna ja karvatüübi ning koostame seansside plaani.' },
@@ -199,7 +203,9 @@ export const TR = {
     gallery_cat_depil: 'Depilation & sugaring', gallery_cat_electro: 'Electrolysis', gallery_cat_massage: 'Massage',
     reviews_eyebrow: 'Reviews', reviews_title: 'What clients say',
     results_eyebrow: 'Result', results_title: 'Before and after',
-    results_before: 'Before', results_after: 'After', results_caption: 'Electrolysis, underarm area.',
+    results_before: 'Before', results_after: 'After',
+    results_cap_underarm: 'Electrolysis, underarm area.',
+    results_cap_bikini: 'Electrolysis, bikini line. Interim result: 7 months, 6 full sessions.',
     process_eyebrow: 'How it works', process_title: 'Electrolysis step by step',
     process: [
       { t: 'Consultation', d: 'We discuss the area and hair type and plan the sessions.' },

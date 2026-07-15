@@ -220,6 +220,7 @@ main { flex: 1; }
   font-size: 11px; letter-spacing: .16em; text-transform: uppercase; padding: 5px 13px; border-radius: 999px;
 }
 .results-caption { text-align: center; margin-top: 20px; font-size: 14px; font-weight: 300; color: var(--muted); }
+.result-case + .result-case { margin-top: 44px; }
 @media (max-width: 600px) { .ba img { height: 260px; } }
 
 /* ---------- FAQ ---------- */

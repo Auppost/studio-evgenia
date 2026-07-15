@@ -80,6 +80,20 @@ export const GALLERY = [
   },
 ]
 
+// Before / after cases for the results section (electrolysis).
+export const RESULTS = [
+  {
+    captionKey: 'results_cap_underarm',
+    before: 'uploads/result-before.jpg',
+    after: 'uploads/result-after.jpg',
+  },
+  {
+    captionKey: 'results_cap_bikini',
+    before: 'uploads/result-bikini-before.jpg',
+    after: 'uploads/result-bikini-after.jpg',
+  },
+]
+
 // Featured services on the home teaser (index into SERVICES + a photo).
 export const FEATURED = [
   { index: 14, img: 'uploads/IMG_3253.jpg' },      // Электроэпиляция (фото с иглодержателем)
