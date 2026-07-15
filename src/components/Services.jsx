@@ -75,6 +75,7 @@ export default function Services({ t, lang, aud, setAud, onBook }) {
             <div className="kicker">{t.massage_extra}</div>
             <h3>{t.cat_massage}</h3>
           </div>
+          <p className="cat-note">{t.massage_note}</p>
           <div className="svc-list">
             {massage.map((s, i) => (
               <ServiceRow key={i} s={s} t={t} onBook={() => onBook(s)} />

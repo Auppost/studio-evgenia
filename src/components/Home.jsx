@@ -196,6 +196,25 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
         </div>
       </section>
 
+      {/* RESULT before / after */}
+      <section className="results">
+        <div className="section-head">
+          <div className="eyebrow">{t.results_eyebrow}</div>
+          <h2>{t.results_title}</h2>
+        </div>
+        <div className="ba-grid">
+          <figure className="ba">
+            <img src="uploads/result-before.jpg" alt={t.results_before} loading="lazy" />
+            <figcaption>{t.results_before}</figcaption>
+          </figure>
+          <figure className="ba">
+            <img src="uploads/result-after.jpg" alt={t.results_after} loading="lazy" />
+            <figcaption>{t.results_after}</figcaption>
+          </figure>
+        </div>
+        <p className="results-caption">{t.results_caption}</p>
+      </section>
+
       {/* FAQ */}
       <section className="faq">
         <div className="section-head">

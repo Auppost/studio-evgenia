@@ -22,8 +22,10 @@ export const SERVICES = [
   // Электроэпиляция
   { cat: 'e', aud: 'both', min: 30, price: 25, ru: 'Пробная электроэпиляция', et: 'Proovielektroepilatsioon', en: 'Trial electrolysis' },
   { cat: 'e', aud: 'both', min: 60, price: 50, ru: 'Электроэпиляция', et: 'Elektroepilatsioon', en: 'Electrolysis' },
-  // Массаж
-  { cat: 'm', aud: 'both', min: 30, price: 15, ru: 'Массаж головы и лица', et: 'Pea- ja näomassaaž', en: 'Head & face massage' },
+  // Массаж (только расслабляющий, три длительности)
+  { cat: 'm', aud: 'both', min: 60, price: 45, ru: 'Расслабляющий массаж', et: 'Lõõgastav massaaž', en: 'Relaxing massage' },
+  { cat: 'm', aud: 'both', min: 90, price: 60, ru: 'Расслабляющий массаж', et: 'Lõõgastav massaaž', en: 'Relaxing massage' },
+  { cat: 'm', aud: 'both', min: 120, price: 75, ru: 'Расслабляющий массаж', et: 'Lõõgastav massaaž', en: 'Relaxing massage' },
 ]
 
 export const REVIEWS = {
