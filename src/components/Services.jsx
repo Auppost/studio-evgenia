@@ -67,6 +67,28 @@ export default function Services({ t, lang, aud, setAud, onBook }) {
               <ServiceRow key={i} s={s} t={t} onBook={() => onBook(s)} />
             ))}
           </div>
+          <details className="contra">
+            <summary>{t.contra_title}</summary>
+            <div className="contra-body">
+              <p className="contra-intro">{t.contra_intro}</p>
+
+              <h4 className="contra-h contra-abs">{t.contra_abs_title}</h4>
+              <ul className="contra-list">
+                {t.contra_abs.map((x, i) => <li key={i}>{x}</li>)}
+              </ul>
+
+              <h4 className="contra-h contra-rel">{t.contra_rel_title}</h4>
+              <p className="contra-sub">{t.contra_rel_intro}</p>
+              <ul className="contra-list">
+                {t.contra_rel.map((x, i) => <li key={i}>{x}</li>)}
+              </ul>
+
+              <h4 className="contra-h contra-rec">{t.contra_rec_title}</h4>
+              <ul className="contra-list">
+                {t.contra_rec.map((x, i) => <li key={i}>{x}</li>)}
+              </ul>
+            </div>
+          </details>
         </>
       )}
 
