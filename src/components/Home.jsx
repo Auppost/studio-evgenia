@@ -62,7 +62,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
             <div className="hero-offer">{t.hero_offer}</div>
           </div>
           <div className="col-img">
-            <img src="uploads/IMG_3479.jpg" alt={t.about_title} />
+            <img src="uploads/hero-evgenia.jpg" alt={t.about_title} />
           </div>
         </section>
       )}
