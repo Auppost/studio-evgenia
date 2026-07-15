@@ -82,9 +82,9 @@ export const GALLERY = [
 
 // Featured services on the home teaser (index into SERVICES + a photo).
 export const FEATURED = [
-  { index: 14, img: 'uploads/IMG_3253.jpg' }, // Электроэпиляция (фото с иглодержателем)
-  { index: 6, img: 'uploads/IMG_3163.jpg' },  // Ноги полностью — нейтральное фото депиляции (воск)
-  { index: 11, img: 'uploads/IMG_3546.jpg' }, // Торс (грудь, живот) — фото шугаринга груди совпадает с услугой
+  { index: 14, img: 'uploads/IMG_3253.jpg' },      // Электроэпиляция (фото с иглодержателем)
+  { index: 6, img: 'uploads/IMG_3163.jpg' },       // Ноги полностью — нейтральное фото депиляции (воск)
+  { index: 15, img: 'uploads/massage-back.jpg' },  // Расслабляющий массаж — фото массажа спины
 ]
 
 // Google Apps Script Web App URL that receives bookings and appends them to the
