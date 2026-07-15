@@ -48,19 +48,24 @@ export const REVIEWS = {
 
 // Gallery layout, tall cards span two rows.
 export const GALLERY = [
-  { src: 'uploads/IMG_3253.jpg', tall: true },
+  { src: 'uploads/IMG_3163.jpg', tall: true },
   { src: 'uploads/IMG_3446.jpg' },
   { src: 'uploads/IMG_3230.jpg' },
+  { src: 'uploads/IMG_3479.jpg', tall: true },
+  { src: 'uploads/IMG_3253.jpg', tall: true },
   { src: 'uploads/IMG_3473.jpg' },
+  { src: 'uploads/IMG_3525.jpg' },
   { src: 'uploads/IMG_3530.jpg', tall: true },
-  { src: 'uploads/IMG_3479.jpg' },
+  { src: 'uploads/IMG_3467.jpg' },
+  { src: 'uploads/IMG_3546.jpg' },
+  { src: 'uploads/IMG_3168.jpg' },
 ]
 
 // Featured services on the home teaser (index into SERVICES + a photo).
 export const FEATURED = [
-  { index: 14, img: 'uploads/IMG_3168.jpg' }, // Электроэпиляция
-  { index: 6, img: 'uploads/IMG_3525.jpg' },  // Ноги полностью
-  { index: 15, img: 'uploads/IMG_3546.jpg' }, // Массаж головы и лица
+  { index: 14, img: 'uploads/IMG_3253.jpg' }, // Электроэпиляция (фото с иглодержателем)
+  { index: 6, img: 'uploads/IMG_3525.jpg' },  // Ноги полностью (депиляция)
+  { index: 15, img: 'uploads/IMG_3546.jpg' }, // Массаж — ВРЕМЕННО фото депиляции, нет фото массажа
 ]
 
 // Google Apps Script Web App URL that receives bookings and appends them to the

@@ -62,7 +62,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
             <div className="hero-offer">{t.hero_offer}</div>
           </div>
           <div className="col-img">
-            <img src="uploads/hero-evgenia.jpg" alt={t.about_title} />
+            <img src="uploads/evgenia.jpg" alt={t.about_title} />
           </div>
         </section>
       )}
@@ -87,7 +87,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
       <section className="about">
         <div className="about-top">
           <div className="about-photo">
-            <img src="uploads/evgenia.jpg" alt={t.about_title} />
+            <img src="uploads/IMG_3181.jpg" alt={t.about_title} />
           </div>
           <div className="about-text">
             <div className="eyebrow">{t.about_eyebrow}</div>
