@@ -46,19 +46,38 @@ export const REVIEWS = {
   ],
 }
 
-// Gallery layout, tall cards span two rows.
+// Gallery grouped by service, so it is clear which work is which.
+// Only work / process shots, no posed portraits of the master.
+// key maps to gallery_cat_* label in i18n.
 export const GALLERY = [
-  { src: 'uploads/IMG_3163.jpg', tall: true },
-  { src: 'uploads/IMG_3446.jpg' },
-  { src: 'uploads/IMG_3230.jpg' },
-  { src: 'uploads/IMG_3479.jpg', tall: true },
-  { src: 'uploads/IMG_3253.jpg', tall: true },
-  { src: 'uploads/IMG_3473.jpg' },
-  { src: 'uploads/IMG_3525.jpg' },
-  { src: 'uploads/IMG_3530.jpg', tall: true },
-  { src: 'uploads/IMG_3467.jpg' },
-  { src: 'uploads/IMG_3546.jpg' },
-  { src: 'uploads/IMG_3168.jpg' },
+  {
+    key: 'depil',
+    photos: [
+      'uploads/IMG_3546.jpg', // шугаринг груди
+      'uploads/IMG_3530.jpg', // шугаринг, снятие пасты
+      'uploads/IMG_3525.jpg', // шугаринг подмышки
+      'uploads/IMG_3446.jpg', // подготовка кожи
+      'uploads/IMG_3168.jpg', // воск ItalWax
+      'uploads/wax-italwax.jpg', // НОВОЕ: картриджи воска (прислано)
+    ],
+  },
+  {
+    key: 'electro',
+    photos: [
+      'uploads/IMG_3467.jpg', // электроэпиляция, процедура
+      'uploads/IMG_3473.jpg', // работа иглой, крупно
+      'uploads/IMG_3230.jpg', // стерильные инструменты
+    ],
+  },
+  {
+    key: 'massage',
+    photos: [
+      'uploads/massage-back.jpg',   // НОВОЕ: массаж спины (прислано)
+      'uploads/massage-leg.jpg',    // НОВОЕ: массаж ног (прислано)
+      'uploads/massage-foot.jpg',   // НОВОЕ: массаж стоп (прислано)
+      'uploads/massage-towels.jpg', // НОВОЕ: подготовка, полотенца (прислано)
+    ],
+  },
 ]
 
 // Featured services on the home teaser (index into SERVICES + a photo).
