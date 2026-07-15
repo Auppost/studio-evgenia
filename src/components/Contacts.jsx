@@ -1,11 +1,17 @@
 import { useState } from 'react'
-import { IG_URL, IG_HANDLE } from '../data.js'
+import { IG_URL, IG_HANDLE, WHATSAPP_NUMBER } from '../data.js'
 
 export default function Contacts({ t }) {
   const [name, setName] = useState('')
-  const [contact, setContact] = useState('')
   const [msg, setMsg] = useState('')
-  const [sent, setSent] = useState(false)
+
+  // Open WhatsApp with the typed question prefilled to the studio.
+  const openWhatsApp = (e) => {
+    e.preventDefault()
+    const text = name ? `${name}: ${msg}` : msg
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text.trim() || ' ')}`
+    window.open(url, '_blank', 'noopener')
+  }
 
   return (
     <div className="page contacts-page">
@@ -41,19 +47,11 @@ export default function Contacts({ t }) {
         <div className="form-card">
           <h3>{t.form_title}</h3>
           <p className="sub">{t.form_sub}</p>
-          {sent ? (
-            <div className="thanks">{t.form_thanks}</div>
-          ) : (
-            <form
-              className="form-fields"
-              onSubmit={(e) => { e.preventDefault(); setSent(true) }}
-            >
-              <input className="field" value={name} onChange={(e) => setName(e.target.value)} placeholder={t.form_name} />
-              <input className="field" value={contact} onChange={(e) => setContact(e.target.value)} placeholder={t.form_phone} />
-              <textarea className="field" value={msg} onChange={(e) => setMsg(e.target.value)} placeholder={t.form_msg} rows="4" />
-              <button className="btn btn-accent" type="submit" style={{ marginTop: 4 }}>{t.form_send}</button>
-            </form>
-          )}
+          <form className="form-fields" onSubmit={openWhatsApp}>
+            <input className="field" value={name} onChange={(e) => setName(e.target.value)} placeholder={t.form_name} />
+            <textarea className="field" value={msg} onChange={(e) => setMsg(e.target.value)} placeholder={t.form_msg} rows="4" />
+            <button className="btn btn-accent" type="submit" style={{ marginTop: 4 }}>{t.form_wa_btn}</button>
+          </form>
         </div>
       </div>
     </div>

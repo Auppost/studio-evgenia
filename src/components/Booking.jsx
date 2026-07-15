@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { SERVICES, IG_URL, BOOK_TIMES, BOOKING_ENDPOINT } from '../data.js'
 import { localizeService, buildDays } from '../helpers.js'
+import { trackBooking } from '../analytics.js'
 
 export default function Booking({
   t, lang, booking, setBooking, bName, setBName, bContact, setBContact, bEmail, setBEmail,
@@ -76,7 +77,7 @@ export default function Booking({
       let data = null
       try { data = await res.json() } catch { /* response not readable */ }
 
-      if (data && data.ok) { setStatus('sent'); return }
+      if (data && data.ok) { markSent(); return }
       if (data && data.reason === 'taken') { markTakenAndReturn(key); return }
       if (data && data.ok === false) { setStatus('error'); return }
 
@@ -91,8 +92,14 @@ export default function Booking({
   // Booking succeeded server-side but we couldn't read the reply, confirm via slots.
   const verifyOrFail = async (key) => {
     const set = await loadSlots()
-    if (set && key && set.has(key)) setStatus('sent')
+    if (set && key && set.has(key)) markSent()
     else setStatus('error')
+  }
+
+  // Mark the booking confirmed and fire the Meta conversion event.
+  const markSent = () => {
+    trackBooking()
+    setStatus('sent')
   }
 
   const markTakenAndReturn = (key) => {

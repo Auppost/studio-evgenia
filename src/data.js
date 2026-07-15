@@ -66,6 +66,13 @@ export const FEATURED = [
 // Instagram Direct only. See booking-sheet.gs and SETUP-BOOKING.md.
 export const BOOKING_ENDPOINT = 'https://script.google.com/macros/s/AKfycbymgF5cXbwdJ5FwEqYbEJ6gibcNqGiSalymxmnCdYtwpTvvWxyzX5Be3mewimjduTt-/exec'
 
+// Meta (Facebook) Pixel ID из Events Manager. Пусто = пиксель выключен.
+// Вписать сюда числовой ID (напр. '1234567890123456'), чтобы включить трекинг.
+export const META_PIXEL_ID = ''
+
+// Телефон студии (WhatsApp) в международном формате без плюса и пробелов.
+export const WHATSAPP_NUMBER = '3725573981'
+
 export const IG_URL = 'https://www.instagram.com/massage_tln_depilation'
 export const IG_HANDLE = '@massage_tln_depilation'
 export const BOOK_TIMES = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
