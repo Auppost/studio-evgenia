@@ -6,17 +6,17 @@ const POINTS = {
   ru: [
     { t: 'Результат навсегда', d: 'Электроэпиляция убирает волос навсегда, даже светлый, седой и вросший.' },
     { t: 'Бережно и без боли', d: 'Работаю деликатно, с анестезией и заботой о вашей коже.' },
-    { t: 'Только вы и я', d: 'Одна мастерица, одна запись в час, без потока и спешки.' },
+    { t: 'Всё внимание вам', d: 'Одна мастерица, одна запись в час, без потока и спешки.' },
   ],
   et: [
     { t: 'Tulemus jäädavalt', d: 'Elektroepilatsioon eemaldab karva jäädavalt, ka heleda, halli ja sissekasvanu.' },
     { t: 'Õrn ja valutu', d: 'Töötan hoolikalt, tuimestuse ja hoolega sinu naha eest.' },
-    { t: 'Ainult sina ja mina', d: 'Üks meister, üks broneering tunnis, ilma voo ja kiirustamiseta.' },
+    { t: 'Kogu tähelepanu sulle', d: 'Üks meister, üks broneering tunnis, ilma voo ja kiirustamiseta.' },
   ],
   en: [
     { t: 'Results for good', d: 'Electrolysis removes hair permanently, even light, grey and ingrown.' },
     { t: 'Gentle & painless', d: 'I work carefully, with numbing and care for your skin.' },
-    { t: 'Just you and me', d: 'One specialist, one appointment per hour, no crowds, no rush.' },
+    { t: 'Undivided attention', d: 'One specialist, one appointment per hour, no crowds, no rush.' },
   ],
 }
 
