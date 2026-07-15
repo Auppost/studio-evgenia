@@ -70,6 +70,9 @@ export const BOOKING_ENDPOINT = 'https://script.google.com/macros/s/AKfycbymgF5c
 // Вписать сюда числовой ID (напр. '1234567890123456'), чтобы включить трекинг.
 export const META_PIXEL_ID = ''
 
+// Google Analytics 4 Measurement ID (напр. 'G-XXXXXXXXXX'). Пусто = GA выключен.
+export const GA_MEASUREMENT_ID = ''
+
 // Телефон студии (WhatsApp) в международном формате без плюса и пробелов.
 export const WHATSAPP_NUMBER = '3725573981'
 

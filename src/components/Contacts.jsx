@@ -39,8 +39,13 @@ export default function Contacts({ t }) {
               <a className="value" href={IG_URL} target="_blank" rel="noreferrer">{IG_HANDLE}</a>
             </div>
           </div>
-          <div className="contact-photo">
-            <img src="uploads/IMG_3181.jpg" alt={t.contacts_title} />
+          <div className="contact-map">
+            <iframe
+              title="Studio Evgenia — Kadaka tee 44, Tallinn"
+              src="https://maps.google.com/maps?q=Kadaka%20tee%2044,%20Tallinn&z=15&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
 

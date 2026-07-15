@@ -14,6 +14,7 @@ export const TR = {
     hero_title_b: 'Гладкая кожа\nбез лишних волос,\nнавсегда',
     hero_sub: 'Стойкое удаление волос навсегда и бережная депиляция в тихой студии в Таллинне. Работаю одна, только вы, без спешки и потока. Массаж, по желанию.',
     hero_cta: 'Записаться онлайн', hero_secondary: 'Смотреть услуги',
+    hero_offer: 'Пробная электроэпиляция за 25 €',
     pillars_eyebrow: 'Чем я занимаюсь',
     pillars: [
       { t: 'Электроэпиляция', d: 'Стойкое удаление волос навсегда, светлые, седые и вросшие.' },
@@ -45,7 +46,7 @@ export const TR = {
       { q: 'Есть ли противопоказания?', a: 'Да, некоторые. Расскажите о своём здоровье при записи, подскажу, подходит ли вам процедура.' },
     ],
     contacts_eyebrow: 'Контакты', contacts_title: 'Как связаться и добраться',
-    c_address_l: 'Адрес', c_address_v: 'Таллинн, точный адрес при записи',
+    c_address_l: 'Адрес', c_address_v: 'Kadaka tee 44, каб. 23, Mustamäe, Таллинн · бесплатная парковка',
     c_hours_l: 'Часы работы', c_hours_v: 'Пн–Сб, 10:00–19:00',
     c_phone_l: 'Телефон / WhatsApp', c_phone_v: '+372 5573 981',
     form_title: 'Обратная связь', form_sub: 'Напишите вопрос, отвечу в течение дня.',
@@ -74,6 +75,7 @@ export const TR = {
     aud_w_desc: 'Депиляция и электроэпиляция любых зон, шугаринг, а по желанию, антицеллюлитный или лимфодренажный массаж.',
     aud_m_desc: 'Депиляция и электроэпиляция спины, груди и плеч, по желанию, спортивный или расслабляющий массаж.',
     aud_cta_w: 'Услуги для женщин', aud_cta_m: 'Услуги для мужчин',
+    consent_text: 'Мы используем куки для аналитики и рекламы.', consent_accept: 'Принять', consent_decline: 'Отклонить',
     loc: 'ru-RU', unit: 'мин', price_from: 'от',
   },
   et: {
@@ -88,6 +90,7 @@ export const TR = {
     hero_title_b: 'Sile nahk\nliigsete karvadeta,\njäädavalt',
     hero_sub: 'Karvade jäädav eemaldamine ja õrn depilatsioon vaikses Tallinna stuudios. Töötan üksi, ainult sina, ilma kiirustamise ja voota. Massaaž soovi korral.',
     hero_cta: 'Broneeri online', hero_secondary: 'Vaata teenuseid',
+    hero_offer: 'Proovielektroepilatsioon 25 €',
     pillars_eyebrow: 'Millega ma tegelen',
     pillars: [
       { t: 'Elektroepilatsioon', d: 'Karvade jäädav eemaldamine, heledad, hallid ja sissekasvanud.' },
@@ -119,7 +122,7 @@ export const TR = {
       { q: 'Kas on vastunäidustusi?', a: 'Jah, mõned. Räägi broneerimisel oma tervisest, ütlen, kas protseduur sulle sobib.' },
     ],
     contacts_eyebrow: 'Kontakt', contacts_title: 'Kuidas ühendust võtta ja kohale jõuda',
-    c_address_l: 'Aadress', c_address_v: 'Tallinn, täpne aadress broneerimisel',
+    c_address_l: 'Aadress', c_address_v: 'Kadaka tee 44, kab. 23, Mustamäe, Tallinn · tasuta parkimine',
     c_hours_l: 'Lahtiolek', c_hours_v: 'E–L, 10:00–19:00',
     c_phone_l: 'Telefon / WhatsApp', c_phone_v: '+372 5573 981',
     form_title: 'Tagasiside', form_sub: 'Kirjuta küsimus, vastan päeva jooksul.',
@@ -148,6 +151,7 @@ export const TR = {
     aud_w_desc: 'Kõikide piirkondade depilatsioon ja elektroepilatsioon, suhkrudepilatsioon, soovi korral tselluliidivastane või lümfidrenaažimassaaž.',
     aud_m_desc: 'Selja, rinna ja õlgade depilatsioon ja elektroepilatsioon, soovi korral sport- või lõõgastav massaaž.',
     aud_cta_w: 'Teenused naistele', aud_cta_m: 'Teenused meestele',
+    consent_text: 'Kasutame küpsiseid analüütika ja reklaami jaoks.', consent_accept: 'Nõustun', consent_decline: 'Keeldun',
     loc: 'et-EE', unit: 'min', price_from: 'alates',
   },
   en: {
@@ -162,6 +166,7 @@ export const TR = {
     hero_title_b: 'Smooth skin,\nno unwanted hair,\nfor good',
     hero_sub: 'Permanent hair removal and gentle depilation in a quiet Tallinn studio. I work solo, just you, no rush, no crowds. Massage on request.',
     hero_cta: 'Book online', hero_secondary: 'See services',
+    hero_offer: 'Trial electrolysis for 25 €',
     pillars_eyebrow: 'What I do',
     pillars: [
       { t: 'Electrolysis', d: 'Permanent hair removal, light, grey and ingrown hairs.' },
@@ -193,7 +198,7 @@ export const TR = {
       { q: 'Are there contraindications?', a: 'Yes, some. Tell me about your health when booking and I will advise whether it suits you.' },
     ],
     contacts_eyebrow: 'Contact', contacts_title: 'How to reach me & find the studio',
-    c_address_l: 'Address', c_address_v: 'Tallinn, exact address on booking',
+    c_address_l: 'Address', c_address_v: 'Kadaka tee 44, room 23, Mustamäe, Tallinn · free parking',
     c_hours_l: 'Hours', c_hours_v: 'Mon–Sat, 10:00–19:00',
     c_phone_l: 'Phone / WhatsApp', c_phone_v: '+372 5573 981',
     form_title: 'Feedback', form_sub: 'Ask a question, I reply within the day.',
@@ -222,6 +227,7 @@ export const TR = {
     aud_w_desc: 'Depilation and electrolysis of all areas, sugaring, and on request anti-cellulite or lymphatic massage.',
     aud_m_desc: 'Back, chest and shoulder depilation and electrolysis, plus sports or relaxing massage on request.',
     aud_cta_w: 'Services for women', aud_cta_m: 'Services for men',
+    consent_text: 'We use cookies for analytics and ads.', consent_accept: 'Accept', consent_decline: 'Decline',
     loc: 'en-GB', unit: 'min', price_from: 'from',
   },
 }

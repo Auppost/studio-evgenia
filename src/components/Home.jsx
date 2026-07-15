@@ -46,6 +46,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
               <button className="btn btn-accent" onClick={() => go('booking')}>{t.hero_cta}</button>
               <button className="btn btn-ghost-light" onClick={() => go('services')}>{t.hero_secondary}</button>
             </div>
+            <div className="hero-offer hero-offer-light">{t.hero_offer}</div>
           </div>
         </section>
       ) : (
@@ -58,6 +59,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
               <button className="btn btn-accent" onClick={() => go('booking')}>{t.hero_cta}</button>
               <button className="btn btn-ghost-dark" onClick={() => go('services')}>{t.hero_secondary}</button>
             </div>
+            <div className="hero-offer">{t.hero_offer}</div>
           </div>
           <div className="col-img">
             <img src="uploads/IMG_3479.jpg" alt={t.about_title} />
