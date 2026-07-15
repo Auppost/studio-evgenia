@@ -271,6 +271,7 @@ main { flex: 1; }
 .contra-h.contra-rel { color: #A9803F; }
 .contra-h.contra-rec { color: var(--accent-d); }
 .contra-sub { font-size: 13px; font-weight: 300; color: var(--muted); margin: 0 0 8px; line-height: 1.55; }
+.contra-list + .contra-sub { margin-top: 12px; }
 .contra-list { margin: 0; padding: 0; list-style: none; }
 .contra-list li { position: relative; padding: 7px 0 7px 20px; font-size: 14px; font-weight: 300; color: var(--ink-2); line-height: 1.55; border-bottom: 1px solid var(--line-3); }
 .contra-list li:last-child { border-bottom: none; }

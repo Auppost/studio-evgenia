@@ -55,6 +55,27 @@ export default function Services({ t, lang, aud, setAud, onBook }) {
               <ServiceRow key={i} s={s} t={t} onBook={() => onBook(s)} />
             ))}
           </div>
+          <details className="contra">
+            <summary>{t.depil_memo_title}</summary>
+            <div className="contra-body">
+              <h4 className="contra-h contra-rec">{t.depil_memo_before_title}</h4>
+              <ul className="contra-list">
+                {t.depil_memo_before.map((x, i) => <li key={i}>{x}</li>)}
+              </ul>
+
+              <h4 className="contra-h contra-rel">{t.depil_memo_after_title}</h4>
+              <p className="contra-sub">{t.depil_memo_after_intro}</p>
+              <ul className="contra-list">
+                {t.depil_memo_after.map((x, i) => <li key={i}>{x}</li>)}
+              </ul>
+              <p className="contra-sub">{t.depil_memo_care}</p>
+
+              <h4 className="contra-h contra-abs">{t.depil_memo_tell_title}</h4>
+              <ul className="contra-list">
+                {t.depil_memo_tell.map((x, i) => <li key={i}>{x}</li>)}
+              </ul>
+            </div>
+          </details>
         </>
       )}
 
