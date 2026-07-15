@@ -49,6 +49,7 @@ export default function Services({ t, lang, aud, setAud, onBook }) {
       {depilation.length > 0 && (
         <>
           <h3 className="cat-title">{t.cat_depilation}</h3>
+          <p className="cat-note">{t.depil_note}</p>
           <div className="svc-list">
             {depilation.map((s, i) => (
               <ServiceRow key={i} s={s} t={t} onBook={() => onBook(s)} />
