@@ -9,8 +9,9 @@ import Reviews from './components/Reviews.jsx'
 import Contacts from './components/Contacts.jsx'
 import Booking from './components/Booking.jsx'
 
-// Hero layout: 'A' full-bleed photo, 'B' split column. Default A per handoff.
-const HERO_VARIANT = 'A'
+// Hero layout: 'A' full-bleed photo, 'B' split column (text + photo panel).
+// 'B' fits the studio's portrait photos without cropping the subject.
+const HERO_VARIANT = 'B'
 
 export default function App() {
   const [lang, setLang] = useState('ru')

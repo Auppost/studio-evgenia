@@ -112,7 +112,7 @@ main { flex: 1; }
 /* ---------- hero ---------- */
 .hero-a { position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .hero-a .bg { position: absolute; inset: 0; }
-.hero-a .bg img { width: 100%; height: 100%; object-fit: cover; }
+.hero-a .bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
 .hero-a .overlay {
   position: absolute; inset: 0; pointer-events: none;
   background:
@@ -135,7 +135,7 @@ main { flex: 1; }
 .hero-b .sub { font-size: 18px; font-weight: 300; line-height: 1.65; max-width: 440px; margin: 26px 0 34px; color: var(--ink-3); }
 .hero-b .actions { display: flex; gap: 14px; flex-wrap: wrap; }
 .hero-b .col-img { position: relative; min-height: 400px; }
-.hero-b .col-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero-b .col-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
 
 /* ---------- pillars (offer at a glance) ---------- */
 .pillars-band { background: var(--card); border-bottom: 1px solid var(--line-3); }

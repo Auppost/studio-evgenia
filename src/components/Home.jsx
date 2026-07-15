@@ -60,7 +60,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
             </div>
           </div>
           <div className="col-img">
-            <img src="uploads/IMG_3181.jpg" alt={t.about_title} />
+            <img src="uploads/IMG_3479.jpg" alt={t.about_title} />
           </div>
         </section>
       )}
