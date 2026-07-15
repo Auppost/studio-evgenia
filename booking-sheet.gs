@@ -1,5 +1,5 @@
 /**
- * Studio Evgenia — онлайн-запись с занятостью слотов + письмо-подтверждение клиенту.
+ * Studio Evgenia, онлайн-запись с занятостью слотов + письмо-подтверждение клиенту.
  *
  * • doGet(?action=slots) → занятые слоты "YYYY-MM-DD HH:MM" (для «занято» на сайте).
  * • doPost → бронирует слот (LockService, без двойной брони) и шлёт КЛИЕНТУ письмо на email.
@@ -107,16 +107,16 @@ function clientMessage_(lang, data, when) {
   var s = data.service || ''
   if (lang === 'et') {
     return {
-      subject: 'Sinu broneering — ' + s + ', ' + when + ' ' + data.time,
+      subject: 'Sinu broneering, ' + s + ', ' + when + ' ' + data.time,
       body: 'Tere, ' + data.name + '!\n\n' +
         'Aitäh broneeringu eest Evgenia stuudios. Sinu andmed:\n\n' +
         'Teenus: ' + s + '\nKuupäev: ' + when + '\nKellaaeg: ' + data.time + '\nAadress: ' + STUDIO_ADDRESS + '\n\n' +
-        'Kui plaanid muutuvad — kirjuta või helista: ' + STUDIO_PHONE + '.\n\nKohtumiseni!\nJevgenia',
+        'Kui plaanid muutuvad, kirjuta või helista: ' + STUDIO_PHONE + '.\n\nKohtumiseni!\nJevgenia',
     }
   }
   if (lang === 'en') {
     return {
-      subject: 'Your booking — ' + s + ', ' + when + ' ' + data.time,
+      subject: 'Your booking, ' + s + ', ' + when + ' ' + data.time,
       body: 'Hello ' + data.name + '!\n\n' +
         'Thank you for booking at Evgenia studio. Your details:\n\n' +
         'Service: ' + s + '\nDate: ' + when + '\nTime: ' + data.time + '\nAddress: ' + STUDIO_ADDRESS + '\n\n' +
@@ -124,11 +124,11 @@ function clientMessage_(lang, data, when) {
     }
   }
   return {
-    subject: 'Ваша запись — ' + s + ', ' + when + ' ' + data.time,
+    subject: 'Ваша запись, ' + s + ', ' + when + ' ' + data.time,
     body: 'Здравствуйте, ' + data.name + '!\n\n' +
       'Спасибо за запись в студию Evgenia. Ваши детали:\n\n' +
       'Услуга: ' + s + '\nДата: ' + when + '\nВремя: ' + data.time + '\nАдрес: ' + STUDIO_ADDRESS + '\n\n' +
-      'Если планы изменятся — напишите или позвоните: ' + STUDIO_PHONE + '.\n\nДо встречи!\nЕвгения',
+      'Если планы изменятся, напишите или позвоните: ' + STUDIO_PHONE + '.\n\nДо встречи!\nЕвгения',
   }
 }
 
@@ -139,7 +139,7 @@ function notifyEmail_(data) {
   try {
     MailApp.sendEmail({
       to: NOTIFY_EMAIL,
-      subject: 'Новая запись: ' + (data.service || '') + ' — ' + data.dateISO + ' ' + data.time,
+      subject: 'Новая запись: ' + (data.service || '') + ', ' + data.dateISO + ' ' + data.time,
       body: 'Дата: ' + data.dateISO + '\nВремя: ' + data.time + '\nУслуга: ' + (data.service || '') +
         '\nИмя: ' + data.name + '\nEmail: ' + data.email + '\nКонтакт: ' + (data.contact || '') + '\nЯзык: ' + (data.lang || ''),
     })
@@ -170,7 +170,7 @@ function ensureHeaders_(sheet) {
     sheet.appendRow(HEADERS)
     sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold')
     sheet.setFrozenRows(1)
-    sheet.getRange('B:C').setNumberFormat('@') // Дата и Время — текстом
+    sheet.getRange('B:C').setNumberFormat('@') // Дата и Время, текстом
   }
 }
 

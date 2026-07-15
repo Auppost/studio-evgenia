@@ -28,7 +28,7 @@ export default function Booking({
       setTaken(set)
       return set
     } catch {
-      return null // couldn't read (e.g. CORS) — treat availability as unknown
+      return null // couldn't read (e.g. CORS), treat availability as unknown
     }
   }, [])
 
@@ -48,7 +48,7 @@ export default function Booking({
 
   const submit = async () => {
     if (!canSubmit) return
-    // No endpoint configured yet — fall back to Instagram Direct.
+    // No endpoint configured yet, fall back to Instagram Direct.
     if (!BOOKING_ENDPOINT) {
       window.open(IG_URL, '_blank', 'noopener')
       return
@@ -80,7 +80,7 @@ export default function Booking({
       if (data && data.reason === 'taken') { markTakenAndReturn(key); return }
       if (data && data.ok === false) { setStatus('error'); return }
 
-      // Response wasn't readable — verify by re-reading slots: if our slot is
+      // Response wasn't readable, verify by re-reading slots: if our slot is
       // now taken, the booking went through; otherwise it's a real error.
       await verifyOrFail(key)
     } catch {
@@ -88,7 +88,7 @@ export default function Booking({
     }
   }
 
-  // Booking succeeded server-side but we couldn't read the reply — confirm via slots.
+  // Booking succeeded server-side but we couldn't read the reply, confirm via slots.
   const verifyOrFail = async (key) => {
     const set = await loadSlots()
     if (set && key && set.has(key)) setStatus('sent')
@@ -175,7 +175,7 @@ export default function Booking({
       {step === 3 && (
         <>
           <h3 className="book-h3">{t.book_pick_time}</h3>
-          <p className="book-sub">{date ? date.full : '—'}</p>
+          <p className="book-sub">{date ? date.full : ''}</p>
           {status === 'taken' && <p className="book-err">{t.book_slot_taken}</p>}
           {allTaken ? (
             <p className="book-sub">{t.book_no_times}</p>
@@ -203,9 +203,9 @@ export default function Booking({
         <div className="confirm">
           <div className="summary">
             <div className="title">{t.book_summary}</div>
-            <div className="row"><span className="k">{t.step_service}</span><span>{service ? service.name : '—'}</span></div>
-            <div className="row"><span className="k">{t.step_date}</span><span>{date ? date.full : '—'}</span></div>
-            <div className="row"><span className="k">{t.step_time}</span><span>{time || '—'}</span></div>
+            <div className="row"><span className="k">{t.step_service}</span><span>{service ? service.name : ''}</span></div>
+            <div className="row"><span className="k">{t.step_date}</span><span>{date ? date.full : ''}</span></div>
+            <div className="row"><span className="k">{t.step_time}</span><span>{time || ''}</span></div>
           </div>
 
           {status === 'sent' ? (

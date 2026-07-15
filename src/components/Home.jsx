@@ -1,22 +1,22 @@
 import { SERVICES, REVIEWS, FEATURED } from '../data.js'
 import { localizeService } from '../helpers.js'
 
-// Three home-page benefit points — copy varies per language (from the handoff).
+// Three home-page benefit points, copy varies per language (from the handoff).
 const POINTS = {
   ru: [
-    { t: 'Результат навсегда', d: 'Электроэпиляция убирает волос навсегда — даже светлый, седой и вросший.' },
+    { t: 'Результат навсегда', d: 'Электроэпиляция убирает волос навсегда, даже светлый, седой и вросший.' },
     { t: 'Бережно и без боли', d: 'Работаю деликатно, с анестезией и заботой о вашей коже.' },
-    { t: 'Только вы и я', d: 'Одна мастерица, одна запись в час — без потока и спешки.' },
+    { t: 'Только вы и я', d: 'Одна мастерица, одна запись в час, без потока и спешки.' },
   ],
   et: [
-    { t: 'Tulemus jäädavalt', d: 'Elektroepilatsioon eemaldab karva jäädavalt — ka heleda, halli ja sissekasvanu.' },
+    { t: 'Tulemus jäädavalt', d: 'Elektroepilatsioon eemaldab karva jäädavalt, ka heleda, halli ja sissekasvanu.' },
     { t: 'Õrn ja valutu', d: 'Töötan hoolikalt, tuimestuse ja hoolega sinu naha eest.' },
-    { t: 'Ainult sina ja mina', d: 'Üks meister, üks broneering tunnis — ilma voo ja kiirustamiseta.' },
+    { t: 'Ainult sina ja mina', d: 'Üks meister, üks broneering tunnis, ilma voo ja kiirustamiseta.' },
   ],
   en: [
-    { t: 'Results for good', d: 'Electrolysis removes hair permanently — even light, grey and ingrown.' },
+    { t: 'Results for good', d: 'Electrolysis removes hair permanently, even light, grey and ingrown.' },
     { t: 'Gentle & painless', d: 'I work carefully, with numbing and care for your skin.' },
-    { t: 'Just you and me', d: 'One specialist, one appointment per hour — no crowds, no rush.' },
+    { t: 'Just you and me', d: 'One specialist, one appointment per hour, no crowds, no rush.' },
   ],
 }
 
@@ -65,7 +65,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
         </section>
       )}
 
-      {/* PILLARS — what's offered, at a glance, right under the hero */}
+      {/* PILLARS, what's offered, at a glance, right under the hero */}
       <section className="pillars-band">
         <div className="inner">
           <div className="eyebrow pillars-eyebrow">{t.pillars_eyebrow}</div>

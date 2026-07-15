@@ -1,8 +1,8 @@
-// Service catalogue — carried over verbatim from the design handoff.
+// Service catalogue, carried over verbatim from the design handoff.
 // cat: 'd' depilation · 'e' electrolysis · 'm' massage
 // aud: 'both' | 'w' (women) | 'm' (men)
-// Реальный прайс студии (источник — DIKIDI). cat: 'd' депиляция · 'e' электроэпиляция · 'm' массаж.
-// aud: 'w' женская · 'm' мужская · 'both'. from: true — цена «от …» (зависит от зоны/густоты).
+// Реальный прайс студии (источник, DIKIDI). cat: 'd' депиляция · 'e' электроэпиляция · 'm' массаж.
+// aud: 'w' женская · 'm' мужская · 'both'. from: true, цена «от …» (зависит от зоны/густоты).
 export const SERVICES = [
   // Женская депиляция
   { cat: 'd', aud: 'w', min: 5, price: 5, ru: 'Усики', et: 'Ülahuul', en: 'Upper lip' },
@@ -28,23 +28,23 @@ export const SERVICES = [
 
 export const REVIEWS = {
   ru: [
-    { name: 'Анна', meta: 'Депиляция', text: 'Очень уютно и аккуратно. Евгения — настоящий профессионал, всё спокойно и безболезненно.' },
+    { name: 'Анна', meta: 'Депиляция', text: 'Очень уютно и аккуратно. Евгения, настоящий профессионал, всё спокойно и безболезненно.' },
     { name: 'Мария', meta: 'Массаж', text: 'Хожу на массаж каждый месяц. Расслабляюсь полностью, атмосфера тихая и приятная.' },
-    { name: 'Ольга', meta: 'Электроэпиляция', text: 'Наконец избавилась от вросших волосков навсегда. Терпеливо, аккуратно, с заботой — результатом очень довольна.' },
+    { name: 'Ольга', meta: 'Электроэпиляция', text: 'Наконец избавилась от вросших волосков навсегда. Терпеливо, аккуратно, с заботой, результатом очень довольна.' },
   ],
   et: [
     { name: 'Anna', meta: 'Depilatsioon', text: 'Väga hubane ja korralik. Jevgenia on tõeline professionaal, kõik käib rahulikult ja valutult.' },
     { name: 'Maria', meta: 'Massaaž', text: 'Käin massaažis igal kuul. Lõõgastun täielikult, õhkkond on vaikne ja meeldiv.' },
-    { name: 'Olga', meta: 'Elektroepilatsioon', text: 'Sain sissekasvanud karvadest lõpuks jäädavalt lahti. Kannatlikult, korralikult ja hoolega — tulemusega väga rahul.' },
+    { name: 'Olga', meta: 'Elektroepilatsioon', text: 'Sain sissekasvanud karvadest lõpuks jäädavalt lahti. Kannatlikult, korralikult ja hoolega, tulemusega väga rahul.' },
   ],
   en: [
-    { name: 'Anna', meta: 'Depilation', text: 'So cosy and tidy. Evgenia is a true professional — everything calm and painless.' },
+    { name: 'Anna', meta: 'Depilation', text: 'So cosy and tidy. Evgenia is a true professional, everything calm and painless.' },
     { name: 'Maria', meta: 'Massage', text: 'I come for a massage every month. I relax completely; the atmosphere is quiet and lovely.' },
-    { name: 'Olga', meta: 'Electrolysis', text: 'Finally rid of ingrown hairs for good. Patient, tidy and caring — really happy with the result.' },
+    { name: 'Olga', meta: 'Electrolysis', text: 'Finally rid of ingrown hairs for good. Patient, tidy and caring, really happy with the result.' },
   ],
 }
 
-// Gallery layout — tall cards span two rows.
+// Gallery layout, tall cards span two rows.
 export const GALLERY = [
   { src: 'uploads/IMG_3253.jpg', tall: true },
   { src: 'uploads/IMG_3446.jpg' },
@@ -62,7 +62,7 @@ export const FEATURED = [
 ]
 
 // Google Apps Script Web App URL that receives bookings and appends them to the
-// master's Google Sheet. Leave '' until deployed — the form then falls back to
+// master's Google Sheet. Leave '' until deployed, the form then falls back to
 // Instagram Direct only. See booking-sheet.gs and SETUP-BOOKING.md.
 export const BOOKING_ENDPOINT = 'https://script.google.com/macros/s/AKfycbymgF5cXbwdJ5FwEqYbEJ6gibcNqGiSalymxmnCdYtwpTvvWxyzX5Be3mewimjduTt-/exec'
 

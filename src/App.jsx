@@ -44,7 +44,7 @@ export default function App() {
     window.scrollTo(0, 0)
   }
 
-  // "Book this" from the services list — preselect and jump to date step.
+  // "Book this" from the services list, preselect and jump to date step.
   const bookService = (s) => {
     setBooking({ step: 2, service: s, date: null, time: null })
     setPage('booking')
