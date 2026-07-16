@@ -18,6 +18,9 @@ export const SERVICES = [
   { cat: 'd', aud: 'm', min: 30, price: 15, from: true, ru: 'Депиляция бороды', et: 'Habeme depilatsioon', en: 'Beard depilation' },
   { cat: 'd', aud: 'm', min: 45, price: 30, ru: 'Спина', et: 'Selg', en: 'Back' },
   { cat: 'd', aud: 'm', min: 40, price: 40, ru: 'Торс (грудь, живот)', et: 'Torso (rind, kõht)', en: 'Torso (chest, abdomen)' },
+  { cat: 'd', aud: 'm', min: 30, price: 30, ru: 'Голени', et: 'Sääred', en: 'Shins' },
+  { cat: 'd', aud: 'm', min: 30, price: 30, ru: 'Бёдра', et: 'Reied', en: 'Thighs' },
+  { cat: 'd', aud: 'm', min: 60, price: 55, ru: 'Ноги полностью', et: 'Jalad täielikult', en: 'Full legs' },
   { cat: 'd', aud: 'm', min: 45, price: 50, ru: 'Бикини', et: 'Bikiinijoon', en: 'Bikini' },
   // Электроэпиляция
   { cat: 'e', aud: 'both', min: 30, price: 25, ru: 'Пробная электроэпиляция', et: 'Proovielektroepilatsioon', en: 'Trial electrolysis' },
