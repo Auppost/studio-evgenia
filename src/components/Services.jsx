@@ -1,4 +1,4 @@
-import { SERVICES } from '../data.js'
+import { SERVICES, PACKAGES } from '../data.js'
 import { localizeService } from '../helpers.js'
 
 function ServiceRow({ s, t, onBook }) {
@@ -55,6 +55,30 @@ export default function Services({ t, lang, aud, setAud, onBook }) {
               <ServiceRow key={i} s={s} t={t} onBook={() => onBook(s)} />
             ))}
           </div>
+
+          {aud !== 'm' && (
+            <div className="packages">
+              <div className="packages-head">
+                <div className="eyebrow">{t.packages_eyebrow}</div>
+                <h3>{t.packages_title}</h3>
+                <p className="cat-note">{t.packages_note}</p>
+              </div>
+              <div className="pkg-grid">
+                {PACKAGES.map((p) => (
+                  <div className="pkg-card" key={p.size}>
+                    <div className="pkg-badge">{t.pkg_badge}</div>
+                    <div className="pkg-size">{p.size}</div>
+                    <ul className="pkg-zones">
+                      {p.zones.map((z) => <li key={z}>{t.pkg_z[z]}</li>)}
+                    </ul>
+                    <div className="pkg-price">{p.price} €</div>
+                    <button className="btn-outline pkg-book" onClick={() => onBook({ name: `${t.packages_title} ${p.size}`, price: `${p.price} €`, dur: '' })}>{t.book_this}</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <details className="contra">
             <summary>{t.depil_memo_title}</summary>
             <div className="contra-body">

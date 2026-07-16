@@ -83,6 +83,13 @@ export const GALLERY = [
   },
 ]
 
+// Depilation packages (bundled zones at a special price). zones map to pkg_z keys.
+export const PACKAGES = [
+  { size: 'S', price: 50, zones: ['armpits', 'shin', 'bikini'] },
+  { size: 'M', price: 65, zones: ['bikini', 'shin', 'forearm', 'armpits'] },
+  { size: 'XL', price: 90, zones: ['legs', 'arms', 'bikini', 'armpits'] },
+]
+
 // Before / after cases for the results section (electrolysis).
 export const RESULTS = [
   {
