@@ -53,8 +53,8 @@ export default function Contacts({ t }) {
           <h3>{t.form_title}</h3>
           <p className="sub">{t.form_sub}</p>
           <form className="form-fields" onSubmit={openWhatsApp}>
-            <input className="field" value={name} onChange={(e) => setName(e.target.value)} placeholder={t.form_name} />
-            <textarea className="field" value={msg} onChange={(e) => setMsg(e.target.value)} placeholder={t.form_msg} rows="4" />
+            <input className="field" maxLength={80} value={name} onChange={(e) => setName(e.target.value)} placeholder={t.form_name} />
+            <textarea className="field" maxLength={600} value={msg} onChange={(e) => setMsg(e.target.value)} placeholder={t.form_msg} rows="4" />
             <button className="btn btn-accent" type="submit" style={{ marginTop: 4 }}>{t.form_wa_btn}</button>
           </form>
         </div>

@@ -49,6 +49,24 @@ function doPost(e) {
       return json_({ ok: false, reason: 'invalid' })
     }
 
+    // Валидация: строгий формат даты/времени, разумные длины, email похож на email.
+    // Защита от мусорных броней, спама через письма и захвата всех слотов скриптом.
+    data.dateISO = clip_(data.dateISO, 10)
+    data.time = clip_(data.time, 5)
+    data.name = clip_(data.name, 80)
+    data.email = clip_(data.email, 120)
+    data.contact = clip_(data.contact, 120)
+    data.service = clip_(data.service, 90)
+    data.date = clip_(data.date, 60)
+    data.lang = clip_(data.lang, 5)
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(data.dateISO)) return json_({ ok: false, reason: 'invalid' })
+    if (!/^\d{2}:\d{2}$/.test(data.time)) return json_({ ok: false, reason: 'invalid' })
+    if (!/^\S+@\S+\.\S+$/.test(data.email)) return json_({ ok: false, reason: 'invalid' })
+    // Дата: не в прошлом и не дальше 60 дней вперёд.
+    var today = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd')
+    var maxD = Utilities.formatDate(new Date(Date.now() + 60 * 864e5), TIMEZONE, 'yyyy-MM-dd')
+    if (data.dateISO < today || data.dateISO > maxD) return json_({ ok: false, reason: 'invalid' })
+
     var sheet = getSheet_()
     ensureHeaders_(sheet)
 
@@ -62,7 +80,7 @@ function doPost(e) {
     }
 
     var now = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd HH:mm')
-    sheet.appendRow([now, data.dateISO, data.time, data.service || '', data.name, data.email, data.contact || '', data.lang || '', 'Новая'])
+    sheet.appendRow([now, data.dateISO, data.time, cell_(data.service), cell_(data.name), cell_(data.email), cell_(data.contact), cell_(data.lang), 'Новая'])
 
     notifyClient_(data)   // письмо клиенту
     notifyEmail_(data)    // письмо мастеру (если включено)
@@ -70,7 +88,8 @@ function doPost(e) {
 
     return json_({ ok: true })
   } catch (err) {
-    return json_({ ok: false, error: String(err) })
+    console.error('doPost failed: ' + err)
+    return json_({ ok: false, reason: 'error' })
   } finally {
     lock.releaseLock()
   }
@@ -186,6 +205,18 @@ function rowTime_(v) {
 
 function esc_(v) {
   return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+// Обрезает строку до максимума (защита от мегабайтных полей).
+function clip_(v, max) {
+  return String(v == null ? '' : v).slice(0, max)
+}
+
+// Значение для ячейки таблицы: строки, начинающиеся с = + - @, получают префикс ',
+// чтобы Google Таблица не выполнила их как формулу (formula injection).
+function cell_(v) {
+  var s = String(v == null ? '' : v)
+  return /^[=+\-@]/.test(s) ? "'" + s : s
 }
 
 function json_(obj) {

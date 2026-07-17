@@ -227,9 +227,9 @@ export default function Booking({
             <>
               <div className="your">{t.book_your}</div>
               <div className="form-fields">
-                <input className="field" value={bName} onChange={(e) => setBName(e.target.value)} placeholder={t.form_name} />
-                <input className="field" type="email" value={bEmail} onChange={(e) => setBEmail(e.target.value)} placeholder={t.form_email} />
-                <input className="field" value={bContact} onChange={(e) => setBContact(e.target.value)} placeholder={t.form_phone_opt} />
+                <input className="field" maxLength={80} value={bName} onChange={(e) => setBName(e.target.value)} placeholder={t.form_name} />
+                <input className="field" type="email" maxLength={120} value={bEmail} onChange={(e) => setBEmail(e.target.value)} placeholder={t.form_email} />
+                <input className="field" maxLength={120} value={bContact} onChange={(e) => setBContact(e.target.value)} placeholder={t.form_phone_opt} />
               </div>
               <p className="ig-note">{t.book_ig_note}</p>
               {status === 'error' && <p className="book-err">{t.book_error}</p>}
