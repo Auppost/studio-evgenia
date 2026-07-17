@@ -22,6 +22,7 @@ var TELEGRAM_CHAT_ID = ''
 var TIMEZONE = 'Europe/Tallinn'
 var HEADERS = ['Получено', 'Дата', 'Время', 'Услуга', 'Имя', 'Email', 'Контакт', 'Язык', 'Статус']
 var CANCELLED = 'Отменена'
+var STATUSES = ['Новая', 'Подтверждена', 'Выполнена', 'Отменена']
 // Индексы колонок (0-based) под порядок HEADERS
 var COL_DATE = 1, COL_TIME = 2, COL_STATUS = 8
 
@@ -178,6 +179,53 @@ function notifyTelegram_(data) {
       muteHttpExceptions: true,
     })
   } catch (err) { console.error('telegram notify failed: ' + err) }
+}
+
+// ── Оформление таблицы ────────────────────────────────────────────────────────
+// Запустить ОДИН РАЗ вручную из редактора: выбрать функцию setupSheet → Выполнить.
+// Делает статус выпадающим списком и красит строки по статусу. Повторный запуск
+// безопасен (просто переустановит оформление заново).
+
+function setupSheet() {
+  var sheet = getSheet_()
+  ensureHeaders_(sheet)
+  var rows = Math.max(sheet.getMaxRows(), 1000)
+
+  // Шапка: цвет студии, белый жирный текст, закреплена.
+  sheet.getRange(1, 1, 1, HEADERS.length)
+    .setBackground('#6E7A61').setFontColor('#FFFFFF').setFontWeight('bold')
+  sheet.setFrozenRows(1)
+
+  // Статус: выпадающий список вместо ручного ввода.
+  var statusCol = sheet.getRange(2, COL_STATUS + 1, rows - 1)
+  statusCol.setDataValidation(
+    SpreadsheetApp.newDataValidation().requireValueInList(STATUSES, true).setAllowInvalid(false).build()
+  )
+
+  // Подсветка всей строки по статусу.
+  var data = sheet.getRange(2, 1, rows - 1, HEADERS.length)
+  sheet.setConditionalFormatRules([
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenFormulaSatisfied('=$I2="Отменена"')
+      .setBackground('#EFEFEF').setFontColor('#999999').setStrikethrough(true)
+      .setRanges([data]).build(),
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenFormulaSatisfied('=$I2="Новая"')
+      .setBackground('#FFF4CC')
+      .setRanges([data]).build(),
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenFormulaSatisfied('=$I2="Подтверждена"')
+      .setBackground('#DDE9D5')
+      .setRanges([data]).build(),
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenFormulaSatisfied('=$I2="Выполнена"')
+      .setBackground('#DCE7EA')
+      .setRanges([data]).build(),
+  ])
+
+  // Ширины колонок под содержимое.
+  var widths = [130, 100, 70, 230, 160, 210, 160, 60, 140]
+  for (var i = 0; i < widths.length; i++) sheet.setColumnWidth(i + 1, widths[i])
 }
 
 // ── Утилиты ───────────────────────────────────────────────────────────────────
