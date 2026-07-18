@@ -279,40 +279,90 @@ function handleTgButton_(cb) {
     return json_({ ok: true })
   }
 
-  // Список ближайших записей с кнопками отмены.
+  // Список ближайших записей: тап открывает карточку записи.
   if (act === 'list') {
     var today = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd')
     var sheet3 = getSheet_()
     var vals = sheet3.getLastRow() < 2 ? [] : sheet3.getDataRange().getValues()
     var items = []
     for (var r = 1; r < vals.length; r++) {
-      if (String(vals[r][COL_STATUS]) === CANCELLED) continue
+      var st = String(vals[r][COL_STATUS])
+      if (st === CANCELLED || st === 'Выполнена') continue
       var d3 = rowDateISO_(vals[r][COL_DATE])
       if (d3 < today) continue
-      items.push({ row: r + 1, d: d3, t: rowTime_(vals[r][COL_TIME]), name: String(vals[r][4] || ''), svc: String(vals[r][3] || '') })
+      items.push({ row: r + 1, d: d3, t: rowTime_(vals[r][COL_TIME]), name: String(vals[r][4] || ''), svc: String(vals[r][3] || ''), st: st })
     }
     items.sort(function (a, b) { return (a.d + a.t) < (b.d + b.t) ? -1 : 1 })
     items = items.slice(0, 10)
     answerCb_(cb.id, '')
     if (!items.length) {
-      tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Ближайших записей нет.' })
+      tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Ближайших записей нет.', reply_markup: { inline_keyboard: [[{ text: '← Меню', callback_data: 'menu' }]] } })
       return json_({ ok: true })
     }
     var kb = items.map(function (it) {
-      return [{ text: '❌ ' + it.d.slice(8) + '.' + it.d.slice(5, 7) + ' ' + it.t + ' · ' + (it.name || it.svc), callback_data: 'cxl|' + it.row }]
+      var ico = it.st === 'Блок' ? '🔒' : (it.st === 'Подтверждена' ? '🟢' : '🟡')
+      return [{ text: ico + ' ' + it.d.slice(8) + '.' + it.d.slice(5, 7) + ' ' + it.t + ' · ' + (it.st === 'Блок' ? 'блокировка' : (it.name || it.svc)), callback_data: 'itm|' + it.row }]
     })
-    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Ближайшие записи. Нажми, чтобы отменить и освободить время:', reply_markup: { inline_keyboard: kb } })
+    kb.push([{ text: '← Меню', callback_data: 'menu' }])
+    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Ближайшие записи (🟡 новая, 🟢 подтверждена, 🔒 блокировка).\nНажми на запись:', reply_markup: { inline_keyboard: kb } })
     return json_({ ok: true })
   }
 
-  // Отмена конкретной строки из списка.
+  // Карточка записи с действиями.
+  if (act === 'itm') {
+    var rowI = parseInt(p[1], 10)
+    var sheetI = getSheet_()
+    if (!(rowI >= 2 && rowI <= sheetI.getLastRow())) { answerCb_(cb.id, 'Запись не нашлась'); return json_({ ok: true }) }
+    var v = sheetI.getRange(rowI, 1, 1, HEADERS.length).getValues()[0]
+    var isBlock = String(v[COL_STATUS]) === 'Блок'
+    var card = isBlock
+      ? '🔒 Блокировка времени\n\nДата: ' + rowDateISO_(v[COL_DATE]) + '\nВремя: ' + rowTime_(v[COL_TIME])
+      : '🗓 Запись\n\nДата: ' + rowDateISO_(v[COL_DATE]) + '\nВремя: ' + rowTime_(v[COL_TIME]) +
+        '\nУслуга: ' + v[3] + '\nИмя: ' + v[4] + '\nEmail: ' + v[5] + '\nКонтакт: ' + v[6] +
+        '\nСтатус: ' + v[COL_STATUS]
+    var actions = isBlock
+      ? [[{ text: '🔓 Снять блокировку', callback_data: 'cxl|' + rowI }], [{ text: '← Назад', callback_data: 'list' }]]
+      : [
+          [{ text: '✅ Подтвердить', callback_data: 'st|' + rowI + '|Подтверждена' }, { text: '☑️ Выполнена', callback_data: 'st|' + rowI + '|Выполнена' }],
+          [{ text: '❌ Отменить', callback_data: 'cxl|' + rowI }],
+          [{ text: '← Назад', callback_data: 'list' }],
+        ]
+    answerCb_(cb.id, '')
+    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: card, reply_markup: { inline_keyboard: actions } })
+    return json_({ ok: true })
+  }
+
+  // Смена статуса из карточки (Подтверждена / Выполнена).
+  if (act === 'st') {
+    var rowS = parseInt(p[1], 10)
+    var newSt = p[2]
+    var sheetS = getSheet_()
+    if (rowS >= 2 && rowS <= sheetS.getLastRow() && STATUSES.indexOf(newSt) !== -1) {
+      sheetS.getRange(rowS, COL_STATUS + 1).setValue(newSt)
+      answerCb_(cb.id, newSt)
+      tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: (newSt === 'Выполнена' ? '☑️ Отмечена выполненной.' : '✅ Подтверждена.'), reply_markup: { inline_keyboard: [[{ text: '← К записям', callback_data: 'list' }]] } })
+    } else { answerCb_(cb.id, 'Запись не нашлась') }
+    return json_({ ok: true })
+  }
+
+  // Возврат в меню.
+  if (act === 'menu') {
+    answerCb_(cb.id, '')
+    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Чем помочь?', reply_markup: { inline_keyboard: [
+      [{ text: '🔒 Занять время', callback_data: 'blk' }],
+      [{ text: '📋 Ближайшие записи', callback_data: 'list' }],
+    ] } })
+    return json_({ ok: true })
+  }
+
+  // Отмена записи / снятие блокировки.
   if (act === 'cxl') {
     var rowN = parseInt(p[1], 10)
     var sheet4 = getSheet_()
     if (rowN >= 2 && rowN <= sheet4.getLastRow()) {
       sheet4.getRange(rowN, COL_STATUS + 1).setValue(CANCELLED)
       answerCb_(cb.id, 'Отменено')
-      tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: '❌ Запись отменена, время снова свободно на сайте.' })
+      tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: '❌ Готово, время снова свободно на сайте.', reply_markup: { inline_keyboard: [[{ text: '← К записям', callback_data: 'list' }]] } })
     } else { answerCb_(cb.id, 'Запись не нашлась') }
     return json_({ ok: true })
   }
