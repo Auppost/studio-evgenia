@@ -411,15 +411,39 @@ function answerCb_(id, text) {
   tg_('answerCallbackQuery', p)
 }
 
-// Привязка бота к этому скрипту. Запустить ОДИН РАЗ вручную из редактора,
-// ПОСЛЕ того как вписан токен и сделана «Новая версия» развёртывания.
-function setWebhook() {
-  var res = UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/setWebhook', {
+// ── Доставка сообщений боту: поллинг ─────────────────────────────────────────
+// Вебхук с Apps Script не работает (скрипт отвечает 302, Telegram требует 200
+// и бесконечно повторяет доставку). Поэтому скрипт сам забирает обновления
+// раз в минуту по триггеру.
+
+function pollTelegram() {
+  if (!TELEGRAM_BOT_TOKEN) return
+  var props = PropertiesService.getScriptProperties()
+  var offset = Number(props.getProperty('tg_offset') || 0)
+  var res = UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/getUpdates', {
     method: 'post', contentType: 'application/json',
-    payload: JSON.stringify({ url: WEBAPP_URL, allowed_updates: ['message', 'callback_query'] }),
+    payload: JSON.stringify({ offset: offset, timeout: 0, allowed_updates: ['message', 'callback_query'] }),
     muteHttpExceptions: true,
   })
-  Logger.log(res.getContentText())
+  var data
+  try { data = JSON.parse(res.getContentText()) } catch (err) { return }
+  if (!data.ok || !data.result || !data.result.length) return
+  data.result.forEach(function (u) {
+    try { handleTg_(u) } catch (err) { console.error('poll handle failed: ' + err) }
+    offset = u.update_id + 1
+  })
+  props.setProperty('tg_offset', String(offset))
+}
+
+// Включение бота. Запустить ОДИН РАЗ вручную из редактора (после вписанного
+// токена): удаляет вебхук и ставит ежеминутный триггер поллинга.
+function setupBot() {
+  UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/deleteWebhook?drop_pending_updates=true', { muteHttpExceptions: true })
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'pollTelegram') ScriptApp.deleteTrigger(t)
+  })
+  ScriptApp.newTrigger('pollTelegram').timeBased().everyMinutes(1).create()
+  Logger.log('OK: бот работает через поллинг, триггер каждую минуту создан')
 }
 
 // ── Оформление таблицы ────────────────────────────────────────────────────────
