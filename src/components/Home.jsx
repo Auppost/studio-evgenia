@@ -35,7 +35,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
       {heroVariant === 'A' ? (
         <section className="hero-a">
           <div className="bg">
-            <img src="uploads/IMG_3479.jpg" alt={t.hero_eyebrow} />
+            <img src="/uploads/IMG_3479.jpg" alt={t.hero_eyebrow} />
           </div>
           <div className="overlay" />
           <div className="content">
@@ -62,7 +62,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
             <div className="hero-offer">{t.hero_offer}</div>
           </div>
           <div className="col-img">
-            <img src="uploads/evgenia.jpg" alt={t.about_title} />
+            <img src="/uploads/evgenia.jpg" alt={t.about_title} />
           </div>
         </section>
       )}
@@ -87,7 +87,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
       <section className="about">
         <div className="about-top">
           <div className="about-photo">
-            <img src="uploads/IMG_3181.jpg" alt={t.about_title} />
+            <img src="/uploads/IMG_3181.jpg" alt={t.about_title} />
           </div>
           <div className="about-text">
             <div className="eyebrow">{t.about_eyebrow}</div>
@@ -114,7 +114,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
           </div>
           <div className="aud-grid">
             <div className="aud-card">
-              <div className="photo"><img src="uploads/IMG_3163.jpg" alt={t.aud_w} /></div>
+              <div className="photo"><img src="/uploads/IMG_3163.jpg" alt={t.aud_w} /></div>
               <div className="body">
                 <div className="label">♀ {t.aud_w}</div>
                 <p>{t.aud_w_desc}</p>
@@ -122,7 +122,7 @@ export default function Home({ t, lang, go, goServicesWithAud, faqOpen, setFaqOp
               </div>
             </div>
             <div className="aud-card">
-              <div className="photo"><img src="uploads/IMG_3467.jpg" alt={t.aud_m} /></div>
+              <div className="photo"><img src="/uploads/IMG_3467.jpg" alt={t.aud_m} /></div>
               <div className="body">
                 <div className="label">♂ {t.aud_m}</div>
                 <p>{t.aud_m_desc}</p>

@@ -56,29 +56,29 @@ export const GALLERY = [
   {
     key: 'depil',
     photos: [
-      'uploads/IMG_3546.jpg', // шугаринг груди
-      'uploads/IMG_3530.jpg', // шугаринг, снятие пасты
-      'uploads/IMG_3525.jpg', // шугаринг подмышки
-      'uploads/IMG_3446.jpg', // подготовка кожи
-      'uploads/IMG_3168.jpg', // воск ItalWax
-      'uploads/wax-italwax.jpg', // НОВОЕ: картриджи воска (прислано)
+      '/uploads/IMG_3546.jpg', // шугаринг груди
+      '/uploads/IMG_3530.jpg', // шугаринг, снятие пасты
+      '/uploads/IMG_3525.jpg', // шугаринг подмышки
+      '/uploads/IMG_3446.jpg', // подготовка кожи
+      '/uploads/IMG_3168.jpg', // воск ItalWax
+      '/uploads/wax-italwax.jpg', // НОВОЕ: картриджи воска (прислано)
     ],
   },
   {
     key: 'electro',
     photos: [
-      'uploads/IMG_3467.jpg', // электроэпиляция, процедура
-      'uploads/IMG_3473.jpg', // работа иглой, крупно
-      'uploads/IMG_3230.jpg', // стерильные инструменты
+      '/uploads/IMG_3467.jpg', // электроэпиляция, процедура
+      '/uploads/IMG_3473.jpg', // работа иглой, крупно
+      '/uploads/IMG_3230.jpg', // стерильные инструменты
     ],
   },
   {
     key: 'massage',
     photos: [
-      'uploads/massage-back.jpg',   // НОВОЕ: массаж спины (прислано)
-      'uploads/massage-leg.jpg',    // НОВОЕ: массаж ног (прислано)
-      'uploads/massage-foot.jpg',   // НОВОЕ: массаж стоп (прислано)
-      'uploads/massage-towels.jpg', // НОВОЕ: подготовка, полотенца (прислано)
+      '/uploads/massage-back.jpg',   // НОВОЕ: массаж спины (прислано)
+      '/uploads/massage-leg.jpg',    // НОВОЕ: массаж ног (прислано)
+      '/uploads/massage-foot.jpg',   // НОВОЕ: массаж стоп (прислано)
+      '/uploads/massage-towels.jpg', // НОВОЕ: подготовка, полотенца (прислано)
     ],
   },
 ]
@@ -94,21 +94,21 @@ export const PACKAGES = [
 export const RESULTS = [
   {
     captionKey: 'results_cap_underarm',
-    before: 'uploads/result-before.jpg',
-    after: 'uploads/result-after.jpg',
+    before: '/uploads/result-before.jpg',
+    after: '/uploads/result-after.jpg',
   },
   {
     captionKey: 'results_cap_bikini',
-    before: 'uploads/result-bikini-before.jpg',
-    after: 'uploads/result-bikini-after.jpg',
+    before: '/uploads/result-bikini-before.jpg',
+    after: '/uploads/result-bikini-after.jpg',
   },
 ]
 
 // Featured services on the home teaser (index into SERVICES + a photo).
 export const FEATURED = [
-  { index: 14, img: 'uploads/IMG_3253.jpg' },      // Электроэпиляция (фото с иглодержателем)
-  { index: 6, img: 'uploads/IMG_3163.jpg' },       // Ноги полностью — нейтральное фото депиляции (воск)
-  { index: 15, img: 'uploads/massage-back.jpg' },  // Расслабляющий массаж — фото массажа спины
+  { index: 14, img: '/uploads/IMG_3253.jpg' },      // Электроэпиляция (фото с иглодержателем)
+  { index: 6, img: '/uploads/IMG_3163.jpg' },       // Ноги полностью — нейтральное фото депиляции (воск)
+  { index: 15, img: '/uploads/massage-back.jpg' },  // Расслабляющий массаж — фото массажа спины
 ]
 
 // Google Apps Script Web App URL that receives bookings and appends them to the

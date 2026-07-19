@@ -1,3 +1,25 @@
+// ── URL routing (SEO: у каждого раздела и языка свой адрес) ──────────────────
+// ru живёт в корне (/, /services, ...), et и en с префиксом (/et/, /en/services).
+export const ROUTE_PAGES = ['home', 'services', 'gallery', 'reviews', 'contacts', 'booking']
+
+// Адреса в «каталожной» форме со слэшем (/services/, /et/), как их отдаёт
+// хостинг для сгенерированных страниц — без лишних редиректов.
+export function pathFor(lang, page) {
+  const pre = lang === 'ru' ? '' : `/${lang}`
+  const seg = page === 'home' ? '' : `${page}/`
+  return `${pre}/${seg}`
+}
+
+export function parsePath(pathname) {
+  const parts = pathname.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean)
+  let lang = 'ru'
+  let i = 0
+  if (parts[0] === 'et' || parts[0] === 'en') { lang = parts[0]; i = 1 }
+  const seg = parts[i] || 'home'
+  const page = ROUTE_PAGES.includes(seg) ? seg : 'home'
+  return { lang, page }
+}
+
 // Turn a raw SERVICES entry into localized display fields for the current language.
 export function localizeService(s, lang, t) {
   const dur = `${s.min} ${t.unit}`

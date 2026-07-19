@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { LANGS } from '../i18n.js'
+import { pathFor } from '../helpers.js'
 
 export default function Header({ t, lang, setLang, page, go }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -11,9 +12,17 @@ export default function Header({ t, lang, setLang, page, go }) {
     ['contacts', t.nav_contacts],
   ]
 
-  const navigate = (key) => {
+  // Настоящие <a href> (SEO: индексируемые внутренние ссылки), но переход
+  // делаем без перезагрузки страницы.
+  const navigate = (e, key) => {
+    e.preventDefault()
     setMenuOpen(false)
     go(key)
+  }
+
+  const switchLang = (e, code) => {
+    e.preventDefault()
+    setLang(code)
   }
 
   return (
@@ -27,38 +36,40 @@ export default function Header({ t, lang, setLang, page, go }) {
 
       <header className="header">
         <div className="wrap">
-          <button className="logo" onClick={() => navigate('home')}>
+          <a className="logo" href={pathFor(lang, 'home')} onClick={(e) => navigate(e, 'home')}>
             <span className="logo-name">Evgenia</span>
             <span className="logo-tag">{t.brand_tag}</span>
-          </button>
+          </a>
 
           <nav className="nav">
             {links.map(([key, label]) => (
-              <button
+              <a
                 key={key}
                 className={`nav-link${page === key ? ' active' : ''}`}
-                onClick={() => navigate(key)}
+                href={pathFor(lang, key)}
+                onClick={(e) => navigate(e, key)}
               >
                 {label}
-              </button>
+              </a>
             ))}
           </nav>
 
           <div className="lang-switch">
             {LANGS.map((code) => (
-              <button
+              <a
                 key={code}
                 className={`lang-btn${code === lang ? ' active' : ''}`}
-                onClick={() => setLang(code)}
+                href={pathFor(code, page)}
+                onClick={(e) => switchLang(e, code)}
               >
                 {code.toUpperCase()}
-              </button>
+              </a>
             ))}
           </div>
 
-          <button className="btn btn-accent btn-sm header-book" onClick={() => navigate('booking')}>
+          <a className="btn btn-accent btn-sm header-book" href={pathFor(lang, 'booking')} onClick={(e) => navigate(e, 'booking')}>
             {t.nav_book}
-          </button>
+          </a>
 
           <button
             className="nav-toggle"
@@ -73,17 +84,18 @@ export default function Header({ t, lang, setLang, page, go }) {
         {menuOpen && (
           <div className="mobile-menu">
             {links.map(([key, label]) => (
-              <button
+              <a
                 key={key}
                 className={`mobile-link${page === key ? ' active' : ''}`}
-                onClick={() => navigate(key)}
+                href={pathFor(lang, key)}
+                onClick={(e) => navigate(e, key)}
               >
                 {label}
-              </button>
+              </a>
             ))}
-            <button className="btn btn-accent mobile-book" onClick={() => navigate('booking')}>
+            <a className="btn btn-accent mobile-book" href={pathFor(lang, 'booking')} onClick={(e) => navigate(e, 'booking')}>
               {t.nav_book}
-            </button>
+            </a>
           </div>
         )}
       </header>

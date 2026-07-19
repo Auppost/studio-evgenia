@@ -1,6 +1,13 @@
 import { IG_URL } from '../data.js'
+import { pathFor } from '../helpers.js'
 
-export default function Footer({ t, go }) {
+export default function Footer({ t, lang, go }) {
+  const link = (key, label) => (
+    <a className="foot-link" href={pathFor(lang, key)} onClick={(e) => { e.preventDefault(); go(key) }}>
+      {label}
+    </a>
+  )
+
   return (
     <footer className="footer">
       <div className="top">
@@ -10,13 +17,13 @@ export default function Footer({ t, go }) {
         </div>
         <div className="cols">
           <div className="col">
-            <button className="foot-link" onClick={() => go('services')}>{t.nav_services}</button>
-            <button className="foot-link" onClick={() => go('gallery')}>{t.nav_gallery}</button>
-            <button className="foot-link" onClick={() => go('reviews')}>{t.nav_reviews}</button>
+            {link('services', t.nav_services)}
+            {link('gallery', t.nav_gallery)}
+            {link('reviews', t.nav_reviews)}
           </div>
           <div className="col">
-            <button className="foot-link" onClick={() => go('contacts')}>{t.nav_contacts}</button>
-            <button className="foot-link" onClick={() => go('booking')}>{t.nav_book}</button>
+            {link('contacts', t.nav_contacts)}
+            {link('booking', t.nav_book)}
             <a href={IG_URL} target="_blank" rel="noreferrer">Instagram</a>
           </div>
         </div>
