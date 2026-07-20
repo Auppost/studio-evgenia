@@ -75,10 +75,10 @@ function doPost(e) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(data.dateISO)) return json_({ ok: false, reason: 'invalid' })
     if (!/^\d{2}:\d{2}$/.test(data.time)) return json_({ ok: false, reason: 'invalid' })
     if (!/^\S+@\S+\.\S+$/.test(data.email)) return json_({ ok: false, reason: 'invalid' })
-    // Дата: не в прошлом и не дальше 60 дней вперёд.
-    var today = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd')
+    // Слот: минимум за 24 часа (просьба мастера) и не дальше 60 дней вперёд.
+    var minSlot = Utilities.formatDate(new Date(Date.now() + 24 * 3600e3), TIMEZONE, 'yyyy-MM-dd HH:mm')
     var maxD = Utilities.formatDate(new Date(Date.now() + 60 * 864e5), TIMEZONE, 'yyyy-MM-dd')
-    if (data.dateISO < today || data.dateISO > maxD) return json_({ ok: false, reason: 'invalid' })
+    if (data.dateISO + ' ' + data.time < minSlot || data.dateISO > maxD) return json_({ ok: false, reason: 'invalid' })
 
     var sheet = getSheet_()
     ensureHeaders_(sheet)

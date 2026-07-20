@@ -19,6 +19,10 @@ export default function Booking({
 
   const slotKey = (iso, tm) => `${iso} ${tm}`
 
+  // Запись минимум за сутки: слоты ближе 24 часов не предлагаются.
+  const MIN_LEAD_MS = 24 * 60 * 60 * 1000
+  const tooSoon = (iso, tm) => new Date(`${iso}T${tm}:00`).getTime() - Date.now() < MIN_LEAD_MS
+
   // Pull the list of already-booked slots from the backend.
   const loadSlots = useCallback(async () => {
     if (!BOOKING_ENDPOINT) return new Set()
@@ -111,7 +115,7 @@ export default function Booking({
 
   const times = BOOK_TIMES.map((label) => ({
     label,
-    isTaken: date ? taken.has(slotKey(date.iso, label)) : false,
+    isTaken: date ? (taken.has(slotKey(date.iso, label)) || tooSoon(date.iso, label)) : false,
   }))
   const allTaken = times.every((tm) => tm.isTaken)
 
@@ -163,17 +167,23 @@ export default function Booking({
         <>
           <h3 className="book-h3">{t.book_pick_date}</h3>
           <div className="book-days">
-            {days.map((d, i) => (
-              <button
-                key={i}
-                className="book-day"
-                onClick={() => setBooking((b) => ({ ...b, date: d, step: 3 }))}
-              >
-                <span className="wd">{d.wd}</span>
-                <span className="dnum">{d.day}</span>
-              </button>
-            ))}
+            {days.map((d, i) => {
+              // День недоступен, если все его часы ближе 24 часов (сегодняшний вечер → завтра).
+              const dayOff = BOOK_TIMES.every((tm) => tooSoon(d.iso, tm))
+              return (
+                <button
+                  key={i}
+                  className={`book-day${dayOff ? ' day-off' : ''}`}
+                  disabled={dayOff}
+                  onClick={() => setBooking((b) => ({ ...b, date: d, step: 3 }))}
+                >
+                  <span className="wd">{d.wd}</span>
+                  <span className="dnum">{d.day}</span>
+                </button>
+              )
+            })}
           </div>
+          <p className="book-sub">{t.book_lead_note}</p>
           <div className="book-back-wrap"><button className="back-btn" onClick={back}>{t.book_back}</button></div>
         </>
       )}

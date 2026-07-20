@@ -379,6 +379,8 @@ textarea.field { resize: vertical; }
 .book-days { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
 .book-day { background: var(--card); border: 1px solid var(--line); border-radius: 3px; padding: 16px 6px; cursor: pointer; text-align: center; transition: border-color .15s ease, background .15s ease; font-family: 'Jost', sans-serif; }
 .book-day:hover { border-color: var(--accent); background: #F5F1E8; }
+.book-day.day-off { opacity: .35; cursor: default; }
+.book-day.day-off:hover { border-color: var(--line); background: var(--card); }
 .book-day .wd { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent-d); }
 .book-day .dnum { display: block; font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--ink); margin-top: 4px; }
 .book-times { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; max-width: 560px; margin: 0 auto; }
