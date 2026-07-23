@@ -247,22 +247,12 @@ function handleTgButton_(cb) {
   // Шаг 2: выбор времени, занятые помечены крестиком.
   if (act === 'blk' && p.length === 2) {
     var iso2 = p[1]
-    var taken = {}
-    takenSlots_().forEach(function (k) { taken[k] = true })
-    var rows2 = [], row2 = []
-    BOT_TIMES.forEach(function (tm) {
-      var busy = taken[iso2 + ' ' + tm]
-      row2.push(busy ? { text: '✖ ' + tm, callback_data: 'noop' } : { text: tm, callback_data: 'blk|' + iso2 + '|' + tm })
-      if (row2.length === 3) { rows2.push(row2); row2 = [] }
-    })
-    if (row2.length) rows2.push(row2)
-    rows2.push([{ text: '← Другой день', callback_data: 'blk' }])
     answerCb_(cb.id, '')
-    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Какое время занять (' + iso2 + ')?', reply_markup: { inline_keyboard: rows2 } })
+    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Какое время занять (' + iso2 + ')?\nМожно нажать несколько часов подряд.', reply_markup: { inline_keyboard: hoursKb_(iso2) } })
     return json_({ ok: true })
   }
 
-  // Шаг 3: записать блокировку.
+  // Шаг 3: записать блокировку часа. Клавиатура остаётся, можно жать следующий час.
   if (act === 'blk' && p.length === 3) {
     var isoT = p[1], tmT = p[2]
     var lock = LockService.getScriptLock()
@@ -274,8 +264,38 @@ function handleTgButton_(cb) {
       var now = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd HH:mm')
       sheet.appendRow([now, isoT, tmT, 'Занято вручную', BLOCK_NAME, '', '', '', 'Блок'])
     } finally { lock.releaseLock() }
-    answerCb_(cb.id, 'Готово')
-    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: '🔒 Занято: ' + isoT + ' ' + tmT + '\nНа сайте это время больше не предлагается.' })
+    answerCb_(cb.id, '🔒 ' + tmT + ' занято')
+    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: '🔒 Занято: ' + isoT + ' ' + tmT + '.\nМожно нажать ещё часы или «Готово».', reply_markup: { inline_keyboard: hoursKb_(isoT) } })
+    return json_({ ok: true })
+  }
+
+  // Занять весь день одним нажатием.
+  if (act === 'blkall') {
+    var isoA = p[1]
+    var lockA = LockService.getScriptLock()
+    try { lockA.waitLock(10000) } catch (e3) { answerCb_(cb.id, 'Занято, нажми ещё раз'); return json_({ ok: true }) }
+    try {
+      var takenA = takenSlots_()
+      var sheetA = getSheet_()
+      ensureHeaders_(sheetA)
+      var nowA = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd HH:mm')
+      var added = 0
+      BOT_TIMES.forEach(function (tm) {
+        if (takenA.indexOf(isoA + ' ' + tm) === -1) {
+          sheetA.appendRow([nowA, isoA, tm, 'Занято вручную', BLOCK_NAME, '', '', '', 'Блок'])
+          added++
+        }
+      })
+    } finally { lockA.releaseLock() }
+    answerCb_(cb.id, 'День занят')
+    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: '🔒 ' + isoA + ': весь день занят (' + added + ' ч.), на сайте не показывается.', reply_markup: { inline_keyboard: [[{ text: '← Другой день', callback_data: 'blk' }, { text: 'Готово ✓', callback_data: 'blkdone' }]] } })
+    return json_({ ok: true })
+  }
+
+  // Завершение блокировки.
+  if (act === 'blkdone') {
+    answerCb_(cb.id, '')
+    tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Готово! Занятое время скрыто с сайта.', reply_markup: { inline_keyboard: [[{ text: '☰ Меню', callback_data: 'menu' }]] } })
     return json_({ ok: true })
   }
 
@@ -381,6 +401,22 @@ function handleTgButton_(cb) {
 
   answerCb_(cb.id, '')
   return json_({ ok: true })
+}
+
+// Клавиатура часов для блокировки: занятые с крестиком, плюс «весь день» и «готово».
+function hoursKb_(iso) {
+  var taken = {}
+  takenSlots_().forEach(function (k) { taken[k] = true })
+  var rows = [], row = []
+  BOT_TIMES.forEach(function (tm) {
+    var busy = taken[iso + ' ' + tm]
+    row.push(busy ? { text: '✖ ' + tm, callback_data: 'noop' } : { text: tm, callback_data: 'blk|' + iso + '|' + tm })
+    if (row.length === 3) { rows.push(row); row = [] }
+  })
+  if (row.length) rows.push(row)
+  rows.push([{ text: '🔒 Занять весь день', callback_data: 'blkall|' + iso }])
+  rows.push([{ text: '← Другой день', callback_data: 'blk' }, { text: 'Готово ✓', callback_data: 'blkdone' }])
+  return rows
 }
 
 // Находит невычеркнутую запись по дате+времени и ставит ей статус.
