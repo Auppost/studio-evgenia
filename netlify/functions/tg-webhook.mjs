@@ -12,14 +12,20 @@ export default async (req) => {
   if (req.method !== 'POST') return new Response('ok')
   try {
     const body = await req.text()
-    await fetch(APPS_SCRIPT_URL, {
+    // Запрос уходит в Apps Script, но его обработку мы НЕ ждём: Телеграму
+    // важно получить 200 мгновенно, иначе при задержке скрипта дольше таймаута
+    // функции нажатие теряется и Telegram шлёт повторы. Скрипт, получив
+    // запрос, доделывает работу сам, его ответ нам не нужен.
+    const forward = fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body,
       redirect: 'follow',
-    })
+    }).catch(() => {})
+    // Короткая пауза, чтобы запрос гарантированно ушёл в сеть.
+    await Promise.race([forward, new Promise((r) => setTimeout(r, 600))])
   } catch {
-    // Телеграму всегда отвечаем 200, иначе он начнёт повторять доставку.
+    // Телеграму всегда отвечаем 200.
   }
   return new Response('ok')
 }

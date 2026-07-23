@@ -226,7 +226,11 @@ function handleTgButton_(cb) {
   var p = String(cb.data || '').split('|')
   var act = p[0]
 
-  if (act === 'noop') { answerCb_(cb.id, 'Это время занято'); return json_({ ok: true }) }
+  // Сразу гасим «крутилку» на кнопке, не дожидаясь работы с таблицей.
+  // Результат покажет обновление самого сообщения.
+  answerCb_(cb.id, act === 'noop' ? 'Это время занято' : '')
+
+  if (act === 'noop') return json_({ ok: true })
 
   // Шаг 1 блокировки: выбор дня (сегодня + 11 вперёд).
   if (act === 'blk' && p.length === 1) {
@@ -239,7 +243,6 @@ function handleTgButton_(cb) {
       if (row.length === 3) { rows.push(row); row = [] }
     }
     if (row.length) rows.push(row)
-    answerCb_(cb.id, '')
     tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Какой день занять?', reply_markup: { inline_keyboard: rows } })
     return json_({ ok: true })
   }
@@ -247,7 +250,6 @@ function handleTgButton_(cb) {
   // Шаг 2: выбор времени, занятые помечены крестиком.
   if (act === 'blk' && p.length === 2) {
     var iso2 = p[1]
-    answerCb_(cb.id, '')
     tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Какое время занять (' + iso2 + ')?\nМожно нажать несколько часов подряд.', reply_markup: { inline_keyboard: hoursKb_(iso2) } })
     return json_({ ok: true })
   }
@@ -256,15 +258,17 @@ function handleTgButton_(cb) {
   if (act === 'blk' && p.length === 3) {
     var isoT = p[1], tmT = p[2]
     var lock = LockService.getScriptLock()
-    try { lock.waitLock(10000) } catch (e2) { answerCb_(cb.id, 'Занято, нажми ещё раз'); return json_({ ok: true }) }
+    try { lock.waitLock(10000) } catch (e2) { return json_({ ok: true }) }
     try {
-      if (takenSlots_().indexOf(isoT + ' ' + tmT) !== -1) { answerCb_(cb.id, 'Это время уже занято'); return json_({ ok: true }) }
+      if (takenSlots_().indexOf(isoT + ' ' + tmT) !== -1) {
+        tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Это время уже занято (' + isoT + '). Выбери другое:', reply_markup: { inline_keyboard: hoursKb_(isoT) } })
+        return json_({ ok: true })
+      }
       var sheet = getSheet_()
       ensureHeaders_(sheet)
       var now = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd HH:mm')
       sheet.appendRow([now, isoT, tmT, 'Занято вручную', BLOCK_NAME, '', '', '', 'Блок'])
     } finally { lock.releaseLock() }
-    answerCb_(cb.id, '🔒 ' + tmT + ' занято')
     tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: '🔒 Занято: ' + isoT + ' ' + tmT + '.\nМожно нажать ещё часы или «Готово».', reply_markup: { inline_keyboard: hoursKb_(isoT) } })
     return json_({ ok: true })
   }
@@ -273,7 +277,7 @@ function handleTgButton_(cb) {
   if (act === 'blkall') {
     var isoA = p[1]
     var lockA = LockService.getScriptLock()
-    try { lockA.waitLock(10000) } catch (e3) { answerCb_(cb.id, 'Занято, нажми ещё раз'); return json_({ ok: true }) }
+    try { lockA.waitLock(10000) } catch (e3) { return json_({ ok: true }) }
     try {
       var takenA = takenSlots_()
       var sheetA = getSheet_()
@@ -287,14 +291,12 @@ function handleTgButton_(cb) {
         }
       })
     } finally { lockA.releaseLock() }
-    answerCb_(cb.id, 'День занят')
     tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: '🔒 ' + isoA + ': весь день занят (' + added + ' ч.), на сайте не показывается.', reply_markup: { inline_keyboard: [[{ text: '← Другой день', callback_data: 'blk' }, { text: 'Готово ✓', callback_data: 'blkdone' }]] } })
     return json_({ ok: true })
   }
 
   // Завершение блокировки.
   if (act === 'blkdone') {
-    answerCb_(cb.id, '')
     tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Готово! Занятое время скрыто с сайта.', reply_markup: { inline_keyboard: [[{ text: '☰ Меню', callback_data: 'menu' }]] } })
     return json_({ ok: true })
   }
@@ -314,7 +316,6 @@ function handleTgButton_(cb) {
     }
     items.sort(function (a, b) { return (a.d + a.t) < (b.d + b.t) ? -1 : 1 })
     items = items.slice(0, 10)
-    answerCb_(cb.id, '')
     if (!items.length) {
       tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Ближайших записей нет.', reply_markup: { inline_keyboard: [[{ text: '← Меню', callback_data: 'menu' }]] } })
       return json_({ ok: true })
@@ -332,7 +333,7 @@ function handleTgButton_(cb) {
   if (act === 'itm') {
     var rowI = parseInt(p[1], 10)
     var sheetI = getSheet_()
-    if (!(rowI >= 2 && rowI <= sheetI.getLastRow())) { answerCb_(cb.id, 'Запись не нашлась'); return json_({ ok: true }) }
+    if (!(rowI >= 2 && rowI <= sheetI.getLastRow())) return json_({ ok: true })
     var v = sheetI.getRange(rowI, 1, 1, HEADERS.length).getValues()[0]
     var isBlock = String(v[COL_STATUS]) === 'Блок'
     var card = isBlock
@@ -347,7 +348,6 @@ function handleTgButton_(cb) {
           [{ text: '❌ Отменить', callback_data: 'cxl|' + rowI }],
           [{ text: '← Назад', callback_data: 'list' }],
         ]
-    answerCb_(cb.id, '')
     tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: card, reply_markup: { inline_keyboard: actions } })
     return json_({ ok: true })
   }
@@ -359,15 +359,13 @@ function handleTgButton_(cb) {
     var sheetS = getSheet_()
     if (rowS >= 2 && rowS <= sheetS.getLastRow() && STATUSES.indexOf(newSt) !== -1) {
       sheetS.getRange(rowS, COL_STATUS + 1).setValue(newSt)
-      answerCb_(cb.id, newSt)
       tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: (newSt === 'Выполнена' ? '☑️ Отмечена выполненной.' : '✅ Подтверждена.'), reply_markup: { inline_keyboard: [[{ text: '← К записям', callback_data: 'list' }]] } })
-    } else { answerCb_(cb.id, 'Запись не нашлась') }
+    }
     return json_({ ok: true })
   }
 
   // Возврат в меню.
   if (act === 'menu') {
-    answerCb_(cb.id, '')
     tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: 'Чем помочь?', reply_markup: { inline_keyboard: [
       [{ text: '🔒 Занять время', callback_data: 'blk' }],
       [{ text: '📋 Ближайшие записи', callback_data: 'list' }],
@@ -381,9 +379,8 @@ function handleTgButton_(cb) {
     var sheet4 = getSheet_()
     if (rowN >= 2 && rowN <= sheet4.getLastRow()) {
       sheet4.getRange(rowN, COL_STATUS + 1).setValue(CANCELLED)
-      answerCb_(cb.id, 'Отменено')
       tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: '❌ Готово, время снова свободно на сайте.', reply_markup: { inline_keyboard: [[{ text: '← К записям', callback_data: 'list' }]] } })
-    } else { answerCb_(cb.id, 'Запись не нашлась') }
+    }
     return json_({ ok: true })
   }
 
@@ -391,7 +388,6 @@ function handleTgButton_(cb) {
   if (act === 'ok' || act === 'no') {
     var d5 = p[1], t5 = p[2]
     var done = setStatusBySlot_(d5, t5, act === 'ok' ? 'Подтверждена' : CANCELLED)
-    answerCb_(cb.id, done ? (act === 'ok' ? 'Подтверждена' : 'Отменена') : 'Запись не найдена')
     if (done) {
       var base = cb.message.text || ''
       tg_('editMessageText', { chat_id: chatId, message_id: cb.message.message_id, text: base + '\n\n' + (act === 'ok' ? '✅ Подтверждена' : '❌ Отменена, слот свободен') })
@@ -399,7 +395,6 @@ function handleTgButton_(cb) {
     return json_({ ok: true })
   }
 
-  answerCb_(cb.id, '')
   return json_({ ok: true })
 }
 
